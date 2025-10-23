@@ -1,0 +1,6 @@
+{
+  "bash-language-server": "5.6.0",
+  "fish-lsp": "1.1.0",
+  "lua-language-server": "3.15.0",
+  "taplo": "0.10.0"
+}
