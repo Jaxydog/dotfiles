@@ -20,6 +20,8 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = '120'
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
+vim.opt.foldtext = ''
+vim.opt.foldcolumn = 'auto:1'
 
 vim.diagnostic.config({
     signs = {

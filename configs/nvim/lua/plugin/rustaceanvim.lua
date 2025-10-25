@@ -4,7 +4,7 @@ return {
         version = '^6',
         lazy = false,
         dependencies = {
-            -- { 'mfussenegger/nvim-dap' },
+            { 'mfussenegger/nvim-dap' },
         },
     },
 }

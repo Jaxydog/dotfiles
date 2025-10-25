@@ -14,8 +14,16 @@ return {
     {
         'mason-org/mason-lspconfig.nvim',
         opts = {
+            ensure_installed = { 'bashls', 'harper_ls', 'fish_lsp', 'lua_ls', 'taplo' },
             automatic_installation = true,
-            ensure_installed = { 'bashls', 'lua_ls', 'taplo' },
+            automatic_enable = {
+                exclude = { 'jdtls', 'rust_analyzer' },
+            },
+            handlers = {
+                vim.lsp.enable,
+                jtdls = function() end,
+                rust_analyzer = function() end,
+            },
         },
         dependencies = {
             { 'mason-org/mason.nvim' },
