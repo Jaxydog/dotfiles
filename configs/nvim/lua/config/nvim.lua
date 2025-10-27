@@ -22,14 +22,18 @@ vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'number'
 vim.opt.foldtext = ''
 vim.opt.foldcolumn = 'auto:1'
+vim.opt.fillchars = 'fold: ,foldopen:󰚶,foldclose:󰚷,foldsep:╏,foldinner:┃'
+vim.opt.list = true
+vim.opt.listchars = 'tab:├╌╌,lead:│,leadmultispace:│   ,trail:╌,nbsp:󰢤'
+vim.opt.winwidth = 127
 
 vim.diagnostic.config({
     signs = {
         text = {
-            [vim.diagnostic.severity.ERROR] = '',
-            [vim.diagnostic.severity.WARN] = '',
-            [vim.diagnostic.severity.INFO] = '',
-            [vim.diagnostic.severity.HINT] = '',
+            [vim.diagnostic.severity.ERROR] = '󰳦',
+            [vim.diagnostic.severity.WARN] = '󰀪',
+            [vim.diagnostic.severity.INFO] = '󰋽',
+            [vim.diagnostic.severity.HINT] = '󰮦',
         },
     },
 })

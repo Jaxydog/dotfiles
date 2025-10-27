@@ -7,6 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazy_install_directory) then
         'clone',
         '--filter=blob:none',
         '--branch=stable',
+        '--depth=1',
         lazy_git_repository,
         lazy_install_directory,
     })

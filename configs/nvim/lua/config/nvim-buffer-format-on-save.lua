@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         vim.api.nvim_clear_autocmds({ buffer = event.buf, group = group_id })
         vim.api.nvim_create_autocmd('BufWritePre', {
-            group = vim.api.nvim_create_augroup('lsp_format_on_save', {}),
+            group = group_id,
             desc = 'Format buffer on save',
             callback = function(format_event)
                 vim.lsp.buf.format({ bufnr = format_event.buf, timeout_ms = 3000 })
