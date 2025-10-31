@@ -19,11 +19,6 @@ return {
             automatic_enable = {
                 exclude = { 'jdtls', 'rust_analyzer' },
             },
-            handlers = {
-                vim.lsp.enable,
-                jtdls = function() end,
-                rust_analyzer = function() end,
-            },
         },
         dependencies = {
             { 'mason-org/mason.nvim' },
