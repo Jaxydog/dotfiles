@@ -6,27 +6,17 @@ return {
             { 'rafamadriz/friendly-snippets' },
         },
         opts = {
-            fuzzy = { implementation = 'prefer_rust_with_warning' },
-            keymap = {
-                preset = 'default',
-                ['<Tab>'] = {
-                    function(cmp)
-                        if cmp.snippet_active() then
-                            return cmp.accept()
-                        else
-                            return cmp.select_and_accept()
-                        end
-                    end,
-                    'fallback'
-                },
-            },
-            sources = {
-                default = { 'lazydev', 'lsp', 'path', 'snippets', --[[ 'buffer' ]] },
-                providers = {
-                    lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
-                },
-            },
             completion = {
+                ghost_text = {
+                    enabled = true,
+                    show_with_menu = true,
+                },
+                list = {
+                    selection = {
+                        auto_insert = false,
+                        preselect = true,
+                    },
+                },
                 menu = {
                     draw = {
                         components = {
@@ -43,6 +33,34 @@ return {
                             },
                         },
                     },
+                },
+            },
+            fuzzy = {
+                implementation = 'prefer_rust_with_warning'
+            },
+            keymap = {
+                preset = 'default',
+                ['<Tab>'] = {
+                    function(cmp)
+                        if cmp.snippet_active() then
+                            return cmp.accept()
+                        else
+                            return cmp.select_and_accept()
+                        end
+                    end,
+                    'fallback'
+                },
+            },
+            signature = {
+                enabled = true,
+                window = {
+                    show_documentation = false,
+                },
+            },
+            sources = {
+                default = { 'lazydev', 'lsp', 'path', 'snippets', --[[ 'buffer' ]] },
+                providers = {
+                    lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
                 },
             },
         },
