@@ -151,7 +151,8 @@ style set sub 74
 
 SCRIPT_STYLE_INITIALIZED=1
 
-declare -r SCRIPT_TIMER_START="$(date +%s.%N)"
+declare SCRIPT_TIMER_START
+SCRIPT_TIMER_START="$(date +%s.%N)"
 
 function timer() {
     local argument="${1:-}"
@@ -161,7 +162,7 @@ function timer() {
         echo "$SCRIPT_TIMER_START"
         ;;
     'elapsed')
-        echo "$(date +%s.%N --date="$SCRIPT_TIMER_START seconds ago")"
+        date +%s.%N --date="$SCRIPT_TIMER_START seconds ago"
         ;;
     '')
         log error "$(scriptmsg 'missing-argument' 1)"
@@ -237,7 +238,7 @@ function log() {
         echo -e \
             "$(style get fg-bright-black)[$(timer elapsed)s]$(style get reset)" \
             "$(style get fg-bright-blue)(info)$(style get reset)" \
-            $@
+            "$@"
         ;;
     'warn')
         shift 1
@@ -250,7 +251,7 @@ function log() {
         >&2 echo -e \
             "$(style get fg-bright-black)[$(timer elapsed)s]$(style get reset)" \
             "$(style get fg-bright-yellow)(warn)$(style get reset)" \
-            $@
+            "$@"
         ;;
     'error')
         shift 1
@@ -263,7 +264,7 @@ function log() {
         >&2 echo -e \
             "$(style get fg-bright-black)[$(timer elapsed)s]$(style get reset)" \
             "$(style get fg-bright-red)(error)$(style get reset)" \
-            $@
+            "$@"
         ;;
     'debug')
         shift 1
@@ -277,7 +278,7 @@ function log() {
             echo -e \
                 "$(style get fg-bright-black)[$(timer elapsed)s]$(style get reset)" \
                 "$(style get fg-magenta)(debug)$(style get reset)" \
-                "$(style get fg-white)$@$(style get reset)"
+                "$(style get fg-white)$*$(style get reset)"
         else
             SCRIPT_LOG_DEBUG_QUEUE+=("$(SCRIPT_LOG_FORCE_DEBUG=1 log debug "$@")")
         fi
@@ -321,7 +322,8 @@ function directory() {
             return 1
         fi
 
-        local value="$(eval "echo \"\${$global_variable_name[$key]}\"")"
+        local value
+        value="$(eval "echo \"\${${global_variable_name}[$key]}\"")"
 
         if [ -z "$value" ]; then
             log error "unknown directory '$category/$key'"
@@ -351,7 +353,7 @@ function directory() {
 
             case "$value" in
             *[!/]*/)
-                value="${value%\"${x##*[!/]}}"
+                value="${value%\""${x##*[!/]}"}"
                 ;;
             *[/])
                 value="/"
@@ -367,7 +369,7 @@ function directory() {
 
         log debug "setting directory '$category/$key' to path '$value'"
 
-        eval "$global_variable_name[$key]='$value'"
+        eval "${global_variable_name}[$key]='$value'"
         ;;
     '')
         log error "$(scriptmsg 'missing-argument' 1)"
@@ -477,7 +479,8 @@ function call() {
             SCRIPT_CALL_GROUP_HEIRARCHY+=("$value")
 
             if [ "$(call get print-group)" -eq 1 ]; then
-                local indent="$(
+                local indent
+                indent="$(
                     indent="$(call get print-indent)"
                     count="$(("${#SCRIPT_CALL_GROUP_HEIRARCHY[@]}" - 1))"
 
@@ -523,18 +526,20 @@ function call() {
         fi
 
         if [ "$(call get print-command)" -eq 1 ]; then
-            local indent="$(
+            local indent
+            indent="$(
                 indent="$(call get print-indent)"
                 count="$(("${#SCRIPT_CALL_GROUP_HEIRARCHY[@]}" - 1))"
 
                 for ((i = 0; i < "$count"; i++)); do echo -n "$indent"; done
             )"
 
-            echo "$indent$(style get fg-white)> $@$(style get reset)"
+            echo "$indent$(style get fg-white)> $*$(style get reset)"
             echo
         fi
 
-        local indent="$(
+        local indent
+        indent="$(
             indent="$(call get print-indent)"
             count="${#SCRIPT_CALL_GROUP_HEIRARCHY[@]}"
 
@@ -545,21 +550,21 @@ function call() {
             echo "$indent$(style get fg-bright-black italic)command disabled due to dry run"
             echo
         else
-            log debug "evaluating command '$@'"
+            log debug "evaluating command '$*'"
 
             local output
             set +e
             output=$(
                 > >(
                     trap '' INT TERM
-                    while read line; do printf "$indent%s\n" "$line"; done
+                    while read -r line; do printf "$indent%s\n" "$line"; done
                 ) 2> >(
                     trap '' INT TERM
-                    while read line; do >&2 printf "$indent%s\n" "$line"; done
-                ) $@ | tee -p --output-error=exit /dev/tty
+                    while read -r line; do >&2 printf "$indent%s\n" "$line"; done
+                ) "$@" | tee -p --output-error=exit /dev/tty
 
                 exit_code="$?"
-                echo -e '.'
+                echo '.'
                 exit "$exit_code"
             )
 
