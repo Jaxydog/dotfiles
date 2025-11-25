@@ -20,12 +20,12 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function(event)
         if not pcall(vim.treesitter.start, event.buf) then return end
 
-        -- This currently breaks automatic indentation on line creation, which is slightly annoying.
-        -- vim.bo.indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
-
         vim.wo.foldmethod = 'expr'
         vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
         vim.wo.foldlevel = 255
+
+        -- This currently breaks automatic indentation on line creation, which is slightly annoying.
+        -- vim.bo.indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
     end
 })
 
