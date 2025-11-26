@@ -3,12 +3,16 @@
 declare -r script_path="$(realpath "$0")"
 declare -r script_name="$(basename --suffix=.sh "$script_path")"
 declare -r script_directory="$(dirname "$script_path")"
-declare -r script_version="0.1.0"
+declare -r script_version='0.1.0'
 
 if ! source "$script_directory/utility.sh"; then
     echo 'Failed to source utility script'
     exit 1
 fi
+
+path set script path "$script_path"
+path set script directory "$script_directory"
+path set script root "$(dirname "$script_directory")"
 
 log debug 'checking installed system'
 
@@ -17,40 +21,14 @@ if [ ! -f '/etc/arch-release' ] && ! uname -r | grep --quiet --ignore-case 'arch
 fi
 
 function echo_usage() {
-    local indent='  '
-
-    echo
-    echo \
-        "$(style get bold fg-bright-cyan)${script_name}$(style get reset)" \
-        "$(style get fg-white)v${script_version}$(style get reset)"
-    echo \
-        "$(style get italic)${indent}Applies the files within this repository to your system$(style get reset)"
-    echo
-    echo \
-        "$(style get bold fg-bright-green)Usage:$(style get reset)" \
-        "$(style get fg-bright-cyan)${script_name}.sh$(style get reset)" \
-        "$(style get fg-cyan)[OPTION]...$(style get reset)"
-    echo
-    echo \
-        "$(style get bold fg-bright-green)Options:$(style get reset)"
-    echo -e \
-        "$(style get fg-bright-cyan)${indent}-n$(style get fg-white)," \
-        "$(style get fg-bright-cyan)--dry-run$(style get reset)" \
-        "$(style get italic)\t\tRun the script without modifying the system$(style get reset)"
-    echo -e \
-        "$(style get fg-bright-cyan)${indent}-z$(style get fg-white)," \
-        "$(style get fg-bright-cyan)--enable-debug$(style get reset)" \
-        "$(style get italic)\t\tEnable debug logging for the current run$(style get reset)"
-    echo
-    echo -e \
-        "$(style get fg-bright-cyan)${indent}-h$(style get fg-white)," \
-        "$(style get fg-bright-cyan)--help$(style get reset)" \
-        "$(style get italic)\t\t\tPrint the script's usage and exit$(style get reset)"
-    echo -e \
-        "$(style get fg-bright-cyan)${indent}-V$(style get fg-white)," \
-        "$(style get fg-bright-cyan)--version$(style get reset)" \
-        "$(style get italic)\t\tPrint the script's version and exit$(style get reset)"
-    echo
+    "$(path get script directory)/help.sh" \
+        --set-name "$script_name" \
+        --set-version "$script_version" \
+        --set-description 'Applies the files within this repository to your system' \
+        --add-option 'n' 'dry-run' 'Run the script without modifying the system' \
+        --add-option 'z' 'debug-enabled' 'Enable debug logging for the current run' \
+        --add-option 'h' 'help' "Prints the script's usage and exits" \
+        --add-option 'V' 'version' "Prints the script's version and exits"
 }
 
 for ((index = 1; index <= "$#"; index += 1)); do
@@ -65,13 +43,13 @@ for ((index = 1; index <= "$#"; index += 1)); do
     fi
 
     case "$argument" in
-    '-z' | '--debug-enabled')
-        log debug 'enabling debug logging'
-        log set debug-enabled 1
-        ;;
     '-n' | '--dry-run')
         log debug 'enabling dry run, system will not be modified'
         call set dry-run 1
+        ;;
+    '-z' | '--debug-enabled')
+        log debug 'enabling debug logging'
+        log set debug-enabled 1
         ;;
     '-h' | '--help')
         echo_usage
@@ -112,7 +90,7 @@ fi
 
 unset print_help
 
-directory set config nvim "$(directory get system config)/nvim"
+path set config nvim "$(path get system config)/nvim"
 
 log info 'checking for system updates'
 

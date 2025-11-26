@@ -298,7 +298,7 @@ log set debug-enabled 0
 
 SCRIPT_LOG_INITIALIZED=1
 
-function directory() {
+function path() {
     local argument="${1:-}"
 
     case "$argument" in
@@ -315,10 +315,10 @@ function directory() {
             return 1
         fi
 
-        local global_variable_name="SCRIPT_DIRECTORY_ARRAY_${category^^}"
+        local global_variable_name="SCRIPT_PATH_ARRAY_${category^^}"
 
         if var unassigned "$global_variable_name"; then
-            log error "unknown directory category '$category'"
+            log error "unknown path category '$category'"
             return 1
         fi
 
@@ -326,7 +326,7 @@ function directory() {
         value="$(eval "echo \"\${${global_variable_name}[$key]}\"")"
 
         if [ -z "$value" ]; then
-            log error "unknown directory '$category/$key'"
+            log error "unknown path '$category/$key'"
             return 1
         fi
 
@@ -361,13 +361,13 @@ function directory() {
             esac
         fi
 
-        local global_variable_name="SCRIPT_DIRECTORY_ARRAY_${category^^}"
+        local global_variable_name="SCRIPT_PATH_ARRAY_${category^^}"
 
         if var unassigned "$global_variable_name"; then
             declare -gA "$global_variable_name"
         fi
 
-        log debug "setting directory '$category/$key' to path '$value'"
+        log debug "setting path '$category/$key' to '$value'"
 
         eval "${global_variable_name}[$key]='$value'"
         ;;
@@ -382,10 +382,10 @@ function directory() {
     esac
 }
 
-directory set system cache "${XDG_CACHE_HOME:-"$HOME/.cache"}"
-directory set system config "${XDG_CONFIG_HOME:-"$HOME/.config"}"
-directory set system data "${XDG_DATA_HOME:-"$HOME/.local/share"}"
-directory set system state "${XDG_STATE_HOME:-"$HOME/.local/state"}"
+path set system cache "${XDG_CACHE_HOME:-"$HOME/.cache"}"
+path set system config "${XDG_CONFIG_HOME:-"$HOME/.config"}"
+path set system data "${XDG_DATA_HOME:-"$HOME/.local/share"}"
+path set system state "${XDG_STATE_HOME:-"$HOME/.local/state"}"
 
 declare -i SCRIPT_CALL_GROUP_CONTINUE=0
 declare -a SCRIPT_CALL_GROUP_HEIRARCHY=()
