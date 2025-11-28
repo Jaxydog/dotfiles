@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-declare -r script_path="$(realpath "$0")"
-declare -r script_name="$(basename --suffix=.sh "$script_path")"
-declare -r script_directory="$(dirname "$script_path")"
-declare -r script_version='0.1.0'
+script_path="$(realpath "$0")"
+script_name="$(basename --suffix=.sh "$script_path")"
+script_directory="$(dirname "$script_path")"
+script_version='0.1.0'
 
 if ! source "$script_directory/utility.sh"; then
     echo 'Failed to source utility script'
@@ -21,14 +21,24 @@ if [ ! -f '/etc/arch-release' ] && ! uname -r | grep --quiet --ignore-case 'arch
 fi
 
 function echo_usage() {
-    "$(path get script directory)/help.sh" \
-        --set-name "$script_name" \
-        --set-version "$script_version" \
-        --set-description 'Applies the files within this repository to your system' \
-        --add-option 'n' 'dry-run' 'Run the script without modifying the system' \
-        --add-option 'z' 'debug-enabled' 'Enable debug logging for the current run' \
-        --add-option 'h' 'help' "Prints the script's usage and exits" \
-        --add-option 'V' 'version' "Prints the script's version and exits"
+    log debug 'printing help listing'
+
+    local arguments=(
+        '--set-name' "$script_name"
+        '--set-version' "$script_version"
+        '--set-description' 'Applies the files within this repository to your system'
+
+        '--add-option' 'n' 'dry-run' 'Run the script without modifying the system'
+        '--add-option' 'z' 'debug-enabled' 'Enable debug logging for the current run'
+        '--add-option' 'h' 'help' "Prints the script's usage and exits"
+        '--add-option' 'V' 'version' "Prints the script's version and exits"
+    )
+
+    if [ "$(log get debug-enabled)" == 1 ]; then
+        arguments+=('--debug-enabled')
+    fi
+
+    "$(path get script directory)/help.sh" "${arguments[@]}"
 }
 
 for ((index = 1; index <= "$#"; index += 1)); do

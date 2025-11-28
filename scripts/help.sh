@@ -12,20 +12,30 @@ fi
 unset script_path
 
 function echo_usage() {
-    "$0" \
-        --set-name "$script_name" \
-        --set-version "$script_version" \
-        --set-description 'Create and display help listings' \
-        --add-option '' 'set-name' 'Sets the command name used within the listing' \
-        --add-option '' 'set-version' 'Sets the command version used within the listing' \
-        --add-option '' 'set-description' 'Sets the command description used within the listing' \
-        --add-option '' 'set-indent' 'Sets the indentation used within the listing' \
-        --add-option '' 'set-margin' 'Sets the margin used to separate arguments and their descriptions' \
-        --add-option '' 'add-option' 'Adds an option entry to the listing' \
-        --add-option '' 'add-subcommand' 'Adds a subcommand entry to the listing' \
-        --add-option 'z' 'debug-enabled' 'Enable debug logging for the current run' \
-        --add-option 'h' 'help' "Prints the script's usage and exits" \
-        --add-option 'V' 'version' "Prints the script's version and exits"
+    log debug 'printing help listing'
+
+    local arguments=(
+        '--set-name' "$script_name"
+        '--set-version' "$script_version"
+        '--set-description' 'Create and display help listings'
+
+        '--add-option' '' 'set-name' 'Sets the command name used within the listing'
+        '--add-option' '' 'set-version' 'Sets the command version used within the listing'
+        '--add-option' '' 'set-description' 'Sets the command description used within the listing'
+        '--add-option' '' 'set-indent' 'Sets the indentation used within the listing'
+        '--add-option' '' 'set-margin' 'Sets the margin used to separate arguments and their descriptions'
+        '--add-option' '' 'add-option' 'Adds an option entry to the listing'
+        '--add-option' '' 'add-subcommand' 'Adds a subcommand entry to the listing'
+        '--add-option' 'z' 'debug-enabled' 'Enable debug logging for the current run'
+        '--add-option' 'h' 'help' "Prints the script's usage and exits"
+        '--add-option' 'V' 'version' "Prints the script's version and exits"
+    )
+
+    if [ "$(log get debug-enabled)" == 1 ]; then
+        arguments+=('--debug-enabled')
+    fi
+
+    "$0" "${arguments[@]}"
 }
 
 declare list_name=
@@ -179,6 +189,8 @@ if [ -z "$list_name" ]; then
     log error "a list name must be specified (use '--set-name <name>')"
     exit 2
 fi
+
+log debug 'printing help list header'
 
 echo
 echo -n "$(style get bold fg-bright-cyan)${list_name}$(style get reset)"
