@@ -14,6 +14,8 @@ path set script path "$script_path"
 path set script directory "$script_directory"
 path set script root "$(dirname "$script_directory")"
 
+unset script_path script_directory
+
 log debug 'checking installed system'
 
 if [ ! -f '/etc/arch-release' ] && ! uname -r | grep --quiet --ignore-case 'arch'; then
