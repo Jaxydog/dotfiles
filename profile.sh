@@ -26,6 +26,16 @@ function prepend_path_if_present() {
     [ -d "$directory" ] && export PATH="$directory:$PATH"
 }
 
+# Exports the given environment variable if it is unset.
+function export_if_absent() {
+    local name="${1:?missing variable name}"
+    local value="${2:?missing variable value}"
+
+    if [ -z "${!name+.}" ] && ! declare -p "$name" &>/dev/null; then
+        export "$name"="$value"
+    fi
+}
+
 # Prints a color escape sequence.
 function color_escape() {
     case "${1:?missing color name}" in
@@ -44,7 +54,13 @@ function color_escape() {
 
 # -----------------------------------------------------------------------------
 
-# Set up local binary directory.
+# Set XDG environment variables. <https://specifications.freedesktop.org/basedir/latest/>
+export_if_absent XDG_CACHE_HOME "$HOME/.cache"
+export_if_absent XDG_CONFIG_HOME "$HOME/.config"
+export_if_absent XDG_CONFIG_DIRS '/etc/xdg'
+export_if_absent XDG_DATA_HOME "$HOME/.local/share"
+export_if_absent XDG_DATA_DIRS '/usr/local/share/:/usr/share/'
+export_if_absent XDG_STATE_HOME "$HOME/.local/state"
 prepend_path_if_present "$HOME/.local/bin"
 
 # Add hardware-accelerated rendering when running under WSL.
@@ -54,8 +70,7 @@ if command_exists wslinfo; then
 fi
 
 # Use the terminal for GPG password entry.
-GPG_TTY="$(tty)"
-export GPG_TTY
+export_if_absent GPG_TTY "$(tty)"
 
 # Set up Cargo.
 source_if_present "$HOME/.cargo/env"
