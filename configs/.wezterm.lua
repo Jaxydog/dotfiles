@@ -45,6 +45,9 @@ wezterm_config.window_frame = {
     inactive_titlebar_bg = '#11111b',
 }
 
+wezterm_config.initial_cols = 120
+wezterm_config.initial_rows = 36
+
 wezterm_config.mouse_bindings = {
     {
         event = { Down = { streak = 1, button = 'Right' } },
