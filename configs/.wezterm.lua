@@ -1,6 +1,8 @@
 local wezterm = require('wezterm')
 local wezterm_config = wezterm.config_builder()
 
+wezterm_config.webgpu_power_preference = 'HighPerformance'
+
 wezterm_config.color_scheme = 'catppuccin-mocha'
 wezterm_config.colors = {
     tab_bar = {
@@ -32,6 +34,9 @@ wezterm_config.font = wezterm.font('Monaspace Neon NF', {})
 wezterm_config.font_size = 10
 
 wezterm_config.window_background_opacity = 0.95
+-- TODO: Uncomment when this is stable.
+-- wezterm_config.kde_window_background_blur = true
+wezterm_config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
 wezterm_config.window_frame = {
     font = wezterm.font('Noto Sans'),
     font_size = 10.0,
