@@ -5,6 +5,7 @@ require('config.nvim-lsp-keybinds')
 require('config.nvim-selected-line-nr-hl')
 require('config.nvim-treesitter')
 require('config.rustaceanvim')
+require('config.mason-preinstall')
 
 if vim.tbl_contains(vim.fn.getcompletion('', 'color'), 'catppuccin-mocha') then
     vim.cmd.colorscheme('catppuccin-mocha')
