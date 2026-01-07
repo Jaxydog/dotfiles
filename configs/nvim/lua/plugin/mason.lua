@@ -28,7 +28,7 @@ return {
     {
         'zapling/mason-lock.nvim',
         opts = {
-            lockfile_path = vim.fn.stdpath('config') .. '/mason-lock.json'
+            lockfile_path = vim.fn.stdpath('config') .. '/mason-lock.json',
         },
         dependencies = {
             { 'mason-org/mason.nvim' },

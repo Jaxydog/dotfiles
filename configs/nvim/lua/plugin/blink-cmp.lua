@@ -22,7 +22,7 @@ return {
         dependencies = {
             { 'rafamadriz/friendly-snippets' },
         },
-        ---@type blink.cmp.Config
+        --- @type blink.cmp.Config
         opts = {
             completion = {
                 ghost_text = {
@@ -54,7 +54,7 @@ return {
                 },
             },
             fuzzy = {
-                implementation = 'prefer_rust_with_warning'
+                implementation = 'prefer_rust_with_warning',
             },
             keymap = {
                 preset = 'default',
@@ -66,7 +66,7 @@ return {
                             return cmp.select_and_accept()
                         end
                     end,
-                    'fallback'
+                    'fallback',
                 },
             },
             signature = {
@@ -82,14 +82,14 @@ return {
                 },
                 transform_items = function(_, items)
                     local is_buffer_only = vim.tbl_isempty(vim.tbl_filter(function(item)
-                        ---@cast item blink.cmp.CompletionItem
+                        --- @cast item blink.cmp.CompletionItem
                         return item.source_name ~= 'buffer'
                     end, items))
 
                     if is_buffer_only then return items end
 
                     return vim.tbl_filter(function(item)
-                        ---@cast item blink.cmp.CompletionItem
+                        --- @cast item blink.cmp.CompletionItem
 
                         return item.kind ~= require('blink.cmp.types').CompletionItemKind.Snippet
                             or (
@@ -99,7 +99,7 @@ return {
                                 end, { predicate = true })
                             )
                     end, items)
-                end
+                end,
             },
         },
     },

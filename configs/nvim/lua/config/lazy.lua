@@ -15,7 +15,7 @@ if not (vim.uv or vim.loop).fs_stat(lazy_install_directory) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { 'Failed to install lazy.nvim:\n', 'ErrorMsg' },
-            { command_output,                   'WarningMsg' },
+            { command_output, 'WarningMsg' },
             { '\nPress any key to exit...' },
         }, true, {})
 

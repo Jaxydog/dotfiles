@@ -1,11 +1,11 @@
 local success, registryOrErrorMessage = pcall(require, 'mason-registry')
 
 if not success then
-    ---@cast registryOrErrorMessage string
+    --- @cast registryOrErrorMessage string
 
     vim.api.nvim_echo({
         { 'Failed to import `mason-registry`', 'WarningMsg' },
-        { registryOrErrorMessage,              'ErrorMsg' },
+        { registryOrErrorMessage, 'ErrorMsg' },
     }, true, {})
 
     return
@@ -22,6 +22,6 @@ for _, packageName in ipairs(packagesToPreinstall) do
     if not registry.has_package(packageName) then
         vim.api.nvim_echo({ { ('Invalid package name `%s`'):format(packageName), 'WarningMsg' } }, true, {})
     elseif not registry.is_installed(packageName) then
-        packagesToActuallyInstall[#packagesToActuallyInstall + 1] = packageName
+        packagesToActuallyInstall[#packagesToActuallyInstall+1] = packageName
     end
 end

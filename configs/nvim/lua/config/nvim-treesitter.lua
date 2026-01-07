@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
         -- This currently breaks automatic indentation on line creation, which is slightly annoying.
         -- vim.bo.indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
-    end
+    end,
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
