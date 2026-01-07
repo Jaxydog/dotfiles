@@ -14,7 +14,7 @@ return {
     {
         'mason-org/mason-lspconfig.nvim',
         opts = {
-            ensure_installed = { 'harper_ls', 'lua_ls' },
+            ensure_installed = { 'harper_ls' },
             automatic_installation = true,
             automatic_enable = {
                 exclude = { 'jdtls', 'rust_analyzer' },
