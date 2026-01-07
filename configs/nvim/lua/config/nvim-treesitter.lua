@@ -1,17 +1,18 @@
 require('nvim-treesitter').install({
     'bash',
+    'diff',
     'fish',
+    'git_config',
+    'git_rebase',
+    'gitattributes',
+    'gitcommit',
+    'gitignore',
+    'json',
+    'markdown',
+    'markdown_inline',
     'regex',
     'rust',
     'toml',
-    'markdown',
-    'markdown_inline',
-    'git_config',
-    'git_rebase',
-    'gitcommit',
-    'gitattributes',
-    'gitignore',
-    'diff',
 })
 
 vim.api.nvim_create_autocmd('FileType', {
