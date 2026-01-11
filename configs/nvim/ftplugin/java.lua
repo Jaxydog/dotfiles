@@ -3,10 +3,16 @@ require('jdtls').start_or_attach({
     cmd = { vim.fn.exepath('jdtls') },
     root_dir = vim.fs.root(0, { '.git', 'gradlew' }),
     settings = {
-        java = {},
-    },
-    init_options = {
-        bundles = {},
+        java = {
+            format = {
+                enabled = true,
+                settings = {
+                    profile = 'default',
+                    --- @diagnostic disable-next-line: param-type-mismatch
+                    url = vim.fs.joinpath(vim.fn.stdpath('config'), 'jdtls-style.xml'),
+                },
+            },
+        },
     },
 })
 
