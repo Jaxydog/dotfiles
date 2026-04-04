@@ -6,6 +6,7 @@ require('config.nvim-selected-line-nr-hl')
 require('config.nvim-treesitter')
 require('config.rustaceanvim')
 require('config.mason-preinstall')
+require('config.harper-close-on-exit')
 
 if vim.tbl_contains(vim.fn.getcompletion('', 'color'), 'catppuccin-mocha') then
     vim.cmd.colorscheme('catppuccin-mocha')
