@@ -1,0 +1,14 @@
+theme = Catppuccin Mocha (Tweaked)
+background-opacity = 0.9
+background-blur = true
+
+font-family = Monaspace Neon NF
+font-feature = +calt, +liga
+font-size = 10
+
+window-width = 120
+window-height = 40
+
+right-click-action = copy-or-paste
+shell-integration = bash
+bell-features = no-title
