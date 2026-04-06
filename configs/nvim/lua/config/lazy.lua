@@ -30,4 +30,8 @@ require('lazy').setup({
     spec = { { import = 'plugin' } },
     install = { colorscheme = { 'catpucchin-mocha' } },
     checker = { enabled = true },
+    ui = {
+        border = 'rounded',
+        backdrop = 15,
+    },
 })

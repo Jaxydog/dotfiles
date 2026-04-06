@@ -36,6 +36,8 @@ return {
                     },
                 },
                 menu = {
+                    border = 'rounded',
+                    winblend = 15,
                     draw = {
                         components = {
                             kind_icon = {
@@ -50,6 +52,12 @@ return {
                                 end,
                             },
                         },
+                    },
+                },
+                documentation = {
+                    window = {
+                        border = 'rounded',
+                        winblend = 15,
                     },
                 },
             },
@@ -72,6 +80,8 @@ return {
             signature = {
                 enabled = true,
                 window = {
+                    border = 'rounded',
+                    winblend = 15,
                     show_documentation = false,
                 },
             },

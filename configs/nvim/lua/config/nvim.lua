@@ -26,8 +26,19 @@ vim.opt.fillchars = 'fold: ,foldopen:󰚶,foldclose:󰚷,foldsep:╏,foldinner:�
 vim.opt.list = true
 vim.opt.listchars = 'tab:├╌╌,lead:│,leadmultispace:│   ,trail:╌,nbsp:󰢤'
 vim.opt.winwidth = 127
+vim.o.winborder = 'rounded'
+vim.o.pumborder = 'rounded'
+vim.o.winblend = 15
+vim.o.pumblend = 15
 
 vim.diagnostic.config({
+    virtual_lines = {
+        current_line = true,
+        severity = {
+            vim.diagnostic.severity.ERROR,
+            vim.diagnostic.severity.WARN,
+        },
+    },
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = '󰳦',
