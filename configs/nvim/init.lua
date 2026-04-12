@@ -1,3 +1,5 @@
+require('vim._core.ui2').enable()
+
 require('config.nvim')
 require('config.lazy')
 require('config.nvim-buffer-format-on-save')
