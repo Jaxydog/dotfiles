@@ -1,7 +1,6 @@
 require('nvim-treesitter').install({
     'bash',
     'diff',
-    'fish',
     'git_config',
     'git_rebase',
     'gitattributes',
