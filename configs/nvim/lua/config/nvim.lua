@@ -32,13 +32,6 @@ vim.o.winblend = 15
 vim.o.pumblend = 15
 
 vim.diagnostic.config({
-    virtual_lines = {
-        current_line = true,
-        severity = {
-            vim.diagnostic.severity.ERROR,
-            vim.diagnostic.severity.WARN,
-        },
-    },
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = '󰳦',
