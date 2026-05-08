@@ -51,6 +51,10 @@ if command_exists bat; then
     alias catdiff='git diff --name-only --relative --diff-filter=d -z | xargs -0 bat --diff'
 fi
 
+if command_exists onefetch; then
+    alias onefetch='onefetch --nerd-fonts'
+fi
+
 # -----------------------------------------------------------------------------
 
 if [ "$command_exists_initialized_here" == 1 ]; then
