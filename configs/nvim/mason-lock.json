@@ -1,15 +1,15 @@
 {
   "bash-language-server": "5.6.0",
   "codelldb": "v1.12.2",
-  "emmylua_ls": "0.23.1",
-  "gradle-language-server": "3.15.0",
-  "harper-ls": "v2.1.0",
-  "jdtls": "v1.58.0",
+  "emmylua_ls": "0.23.2",
+  "gradle-language-server": "3.17.3",
+  "harper-ls": "v2.6.0",
+  "jdtls": "v1.60.0",
   "jq": "jq-1.7",
   "json-lsp": "4.10.0",
   "mdformat": "1.0.0",
   "shellcheck": "v0.11.0",
   "shfmt": "v3.13.1",
-  "tombi": "v0.11.5",
+  "tombi": "v1.2.0",
   "zls": "0.16.0"
 }
