@@ -42,7 +42,12 @@ vim.diagnostic.config({
     },
 })
 
-vim.keymap.set('n', '<C-w>e', vim.cmd.Ex)
+vim.keymap.set('n', '<C-w>e', function()
+    local current_path = vim.api.nvim_buf_get_name(0)
+    local parent_directory = vim.fs.dirname(current_path)
+
+    return vim.cmd.Ex(parent_directory)
+end)
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
 vim.api.nvim_create_user_command('Write', 'noautocmd write', {
