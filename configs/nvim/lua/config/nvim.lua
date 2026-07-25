@@ -1,7 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
-vim.opt.nu = true
+vim.opt.number = true
 vim.opt.tabstop = 8
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -43,10 +43,15 @@ vim.diagnostic.config({
 })
 
 vim.keymap.set('n', '<C-w>e', function()
-    local current_path = vim.api.nvim_buf_get_name(0)
-    local parent_directory = vim.fs.dirname(current_path)
+    local current_buffer_path = vim.api.nvim_buf_get_name(0)
+    local parent_directory = vim.fs.dirname(current_buffer_path)
 
-    return vim.cmd.Ex(parent_directory)
+    return vim.cmd.Explore(parent_directory)
+end)
+vim.keymap.set('n', '<C-w>E', function()
+    local current_working_directory = vim.uv.cwd()
+
+    return vim.cmd.Explore(current_working_directory)
 end)
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
