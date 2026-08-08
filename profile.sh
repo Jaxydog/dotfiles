@@ -74,12 +74,13 @@ export_if_absent GPG_TTY "$(tty)"
 
 # Set up Cargo.
 source_if_present "$HOME/.cargo/env"
+
 # Set up Bob.
 source_if_present "$HOME/.local/share/bob/env/env.sh"
-# Set up FNM.
-export FNM_PATH="$HOME/.local/share/fnm"
-prepend_path_if_present "$FNM_PATH"
-command_exists fnm && eval "$(fnm env --use-on-cd --shell bash)"
+
+# Allow user-specific global NPM package installations.
+export_if_absent npm_config_prefix "$HOME/.local/share/npm"
+prepend_path_if_present "$HOME/.local/share/npm/bin"
 
 # Apply aliases.
 source_if_present "$(dirname "${BASH_SOURCE[0]}")/aliases.sh"
@@ -105,6 +106,7 @@ PS1="\[$(color_escape white)\][$(
 )\[$(color_escape white)\]@$(
 )\[$(color_escape cyan)\]\h $(
 )\[$(color_escape blue)\]\w$(
+)\[$(color_escape magenta)\]\$(if [ -n \"\$(jobs -p)\" ]; then echo ' +\j'; fi)$(
 )\[$(color_escape white)\]]\\\$$(
 )\[$(color_escape reset)\] "
 
