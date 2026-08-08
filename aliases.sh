@@ -19,7 +19,7 @@ alias ip='ip --color=auto'
 
 if command_exists fvr; then
     alias ls='fvr list'
-    alias lsa='fvr list --all --resolve-symlinks --mode=show --size=base-2 --modified=simple --user --group'
+    alias lsa='fvr list --all --resolve-symlinks --mode=show --size=base-2 --modified=simple --user=name --group=name'
     alias tree='fvr tree'
     alias treea='fvr tree --all --resolve-symlinks'
 else
